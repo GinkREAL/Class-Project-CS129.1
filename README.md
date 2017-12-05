@@ -177,8 +177,10 @@ var cfg = {"_id" : "configset","version" : 1,"members" : [{"_id" : 0,"host" : "c
 #### Cleaning up
 
 1. If you wanna delete everything and restart (or not)
-```docker stop shard1 config1 mongo1 mongo2 mongo3 mongos
-   docker rm shard1 config1 mongo1 mongo2 mongo3 mongos```
+```
+docker stop shard1 config1 mongo1 mongo2 mongo3 mongos
+docker rm shard1 config1 mongo1 mongo2 mongo3 mongos
+```
 
 
 
