@@ -158,7 +158,24 @@ db.traffic.find().count()
 exit
 ```
 
-9. Done
+#### Execute the map-reduce functions
+
+1. Login to mongos
+```
+docker exec -it mongos mongo
+```
+
+2. Copy-paste the contents of mapreduce.txt to the shell
+
+3. To see the results for rush hour
+```
+db.traffic.answer2.find().pretty()
+```
+
+4. To see the results for congestion
+```
+db.traffic.answer.find().pretty()
+```
 
 #### Copy-Paste Versions
 
