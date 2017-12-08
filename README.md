@@ -165,7 +165,7 @@ exit
 docker exec -it mongos mongo
 ```
 
-2. Copy-paste the contents of mapreduce.txt to the shell
+2. Copy-paste the contents of mapreduce.js to the shell
 
 3. To see the results for rush hour
 ```
@@ -175,6 +175,11 @@ db.traffic.answer2.find().pretty()
 4. To see the results for congestion
 ```
 db.traffic.answer.find().pretty()
+```
+
+5. To see the rush hour leaderboards
+```
+db.traffic.summary.find().pretty()
 ```
 
 #### Copy-Paste Versions
@@ -197,6 +202,7 @@ var cfg = {"_id" : "configset","version" : 1,"members" : [{"_id" : 0,"host" : "c
 ```
 docker stop shard1 config1 mongo1 mongo2 mongo3 mongos
 docker rm shard1 config1 mongo1 mongo2 mongo3 mongos
+docker network rm project
 ```
 
 

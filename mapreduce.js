@@ -14,6 +14,10 @@ map = function(){
 	emit(this.month + " " + this.day + ", Taft", {"time" : this.time, "entry" : this.taft_entry, "exit" : this.taft_exit});
 }
 
+map2 = function(){
+	emit("Rush Hour Leaderboards", this.value)
+}
+
 reduce = function(key, values){
 	var j = 0;
 	var rt = {};
@@ -39,6 +43,44 @@ reduce2 = function(key, values){
 	return rt;
 }
 
+reduce3 = function(key, values){
+	var rt = {}
+	rt["passed"] = true
+	for(var z = 0 ; z < values.length ; z++){
+
+		if("passed" in values[z]){
+
+			for(vkey in values[z]){
+				if(vkey == "passed") continue;
+				if(vkey in rt){
+					rt[vkey] += values[z][vkey]
+				} else {
+					rt[vkey] = values[z][vkey]
+				}
+			}
+
+		} else {
+
+			var largest = -1
+			var largestKey = ""
+			for(vkey in values[z]){
+				if (values[z][vkey] > largest){
+					largest = values[z][vkey]
+					largestKey = vkey
+				}
+			}
+			if(largestKey == "") continue; //happens because of the dashes
+			if (largestKey in rt){
+				rt[largestKey] += 1
+			} else {
+				rt[largestKey] = 1
+			}
+		}
+
+	}
+	return rt
+}
+
 results = db.runCommand({
 	mapReduce: 'traffic',
 	map: map,
@@ -53,4 +95,9 @@ results2 = db.runCommand({
 	out:'traffic.answer2'
 })
 
-db.traffic.answer.find().pretty()
+results3 = db.runCommand({
+	mapReduce: 'traffic.answer2',
+	map: map2,
+	reduce: reduce3,
+	out: 'traffic.summary'
+})
